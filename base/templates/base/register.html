@@ -1,0 +1,31 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="order" id="order">
+
+    <h1 style="margin-top: 45px;" class="heading"> Login </h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {% for form in forms %}
+        <div class="inputBox">
+            <div class="input">
+                <span>{{form.label}}</span>
+                {{form}}
+            </div>
+            
+        </div>
+        {% endfor %}
+        
+
+        <input type="submit" value="order now" class="btn">
+
+    </form>
+
+</section>
+
+{% endblock %}

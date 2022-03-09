@@ -1,0 +1,45 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="menu" id="menu">
+
+    <h3 style="margin-top: 50px;" class="sub-heading"> our foods </h3>
+
+    <div class="box-container">
+
+        {% for food in foods %}
+
+        <div class="box">
+            <div class="image">
+                <img src="{{food.imageUrl}}" alt="">
+                <a href="#" class="fas fa-heart"></a>
+            </div>
+            <div class="content">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <h3>{{food.name}}</h3>
+                <p>{{food.category}}</p>
+                <button data-food="{{food.id}}" data-action="add" class="btn update-cart">add to cart</button>
+                <span class="price">${{food.price}}</span>
+                {% if request.user.is_authenticated and request.user.is_staff %}
+                <a href="{% url 'edit_food' food.id %}" class="btn">Edit</a>
+                <a href="{% url 'delete_food' food.id %}" class="btn">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

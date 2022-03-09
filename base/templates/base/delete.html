@@ -1,0 +1,29 @@
+{% extends 'base/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="order" id="order">
+
+    <h1 style="margin-top: 45px;" class="heading"> Food Form </h1>
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Are you sure to delete to that "{{obj}}"</span>
+                
+            </div>
+            
+        </div>
+        
+        <a href="{% url 'shop' %}" class="btn">Cancel</a>
+        <input type="submit" value="Confirm" class="btn">
+
+    </form>
+
+</section>
+
+{% endblock %}

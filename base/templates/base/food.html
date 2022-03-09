@@ -1,0 +1,285 @@
+{% extends 'base/main.html' %}
+
+
+{% block content %}
+
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="swiper-container home-slider">
+
+        <div class="swiper-wrapper wrapper">
+
+            {% for food in special_foods %}
+
+            <div class="swiper-slide slide">
+                <div class="content">
+                    <span>our special dish</span>
+                    <h3>{{food.name}}</h3>
+                    <p>{{food.category}}</p>
+                    <p>${{food.price}}</p>
+                    <button data-food="{{food.id}}" data-action="add" class="btn update-cart">Add To Cart</button>
+                    {% if request.user.is_authenticated and request.user.is_staff %}
+                    <a href="{% url 'edit_food' food.id %}" class="btn">Edit</a>
+                    <a href="{% url 'delete_food' food.id %}" class="btn">Delete</a>
+                    {% endif %}
+                </div>
+                <div class="image">
+                    <img src="{{food.imageUrl}}" alt="">
+                </div>
+            </div>
+
+            {% endfor %}
+
+
+
+        </div>
+
+        <div class="swiper-pagination"></div>
+        <br>
+
+    </div>
+
+</section>
+
+<!-- home section ends -->
+
+<!-- dishes section starts  -->
+
+<section class="dishes" id="dishes">
+
+    <h3 class="sub-heading"> our dishes </h3>
+    <h1 class="heading"> popular dishes </h1>
+
+    <div class="box-container">
+
+        {% for food in popular_foods %}
+
+        <div class="box">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'add_fav' food.id %}" class="fas fa-heart"></a>
+            <a href="#" class="fas fa-eye"></a>
+            {% endif %}
+            <img src="{{food.imageUrl}}" alt="">
+            <h3>{{food.name}}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p style="color:var(--light-color);
+            font-size: 2.2rem;
+            padding:.5rem 0;
+            line-height: 1.5;">{{food.category}}</p>
+            <span>${{food.price}}</span>
+            <button data-food="{{food.id}}" data-action="add" class="btn update-cart">add to cart</button>
+            {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="{% url 'edit_food' food.id %}" class="btn">Edit</a>
+            <a href="{% url 'delete_food' food.id %}" class="btn">Delete</a>
+            {% endif %}
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- dishes section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h3 class="sub-heading"> about us </h3>
+    <h1 class="heading"> why choose us? </h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="images/about-img.png" alt="">
+        </div>
+
+        <div class="content">
+            <h3>best food in the country</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, sequi corrupti corporis quaerat voluptatem ipsam neque labore modi autem, saepe numquam quod reprehenderit rem? Tempora aut soluta odio corporis nihil!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, nemo. Sit porro illo eos cumque deleniti iste alias, eum natus.</p>
+            <div class="icons-container">
+                <div class="icons">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>free delivery</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>easy payments</span>
+                </div>
+                <div class="icons">
+                    <i class="fas fa-headset"></i>
+                    <span>24/7 service</span>
+                </div>
+            </div>
+            <a href="#" class="btn">learn more</a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- menu section starts  -->
+
+<section class="menu" id="menu">
+
+    <h3 class="sub-heading"> our menu </h3>
+    <h1 class="heading"> today's speciality </h1>
+
+    <div class="box-container">
+
+        {% for food in today_foods %}
+
+        <div class="box">
+            <div class="image">
+                <img src="{{food.imageUrl}}" alt="">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'add_fav' food.id %}" class="fas fa-heart"></a>
+                {% endif %}
+            </div>
+            <div class="content">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <h3>{{food.name}}</h3>
+                <p>{{food.category}}</p>
+                <button data-food="{{food.id}}" data-action="add" class="btn update-cart">add to cart</button>
+                <span class="price">${{food.price}}</span>
+                {% if request.user.is_authenticated and request.user.is_staff %}
+                <a href="{% url 'edit_food' food.id %}" class="btn">Edit</a>
+                <a href="{% url 'delete_food' food.id %}" class="btn">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- menu section ends -->
+
+<!-- review section starts  -->
+
+<section class="review" id="review">
+
+    <h3 class="sub-heading"> customer's review </h3>
+    <h1 class="heading"> what they say </h1>
+
+    <div class="swiper-container review-slider">
+
+        <div class="swiper-wrapper">
+
+            {% for review in reviews %}
+
+            <div class="swiper-slide slide">
+                <i class="fas fa-quote-right"></i>
+                <div class="user">
+                    <img src="{{review.customer.avaterUrl}}" alt="">
+                    <div class="user-info">
+                        <h3>{{review.customer.name}}</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>{{review.message}}</p>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+    
+</section>
+
+<!-- review section ends -->
+
+<!-- order section starts  -->
+
+
+<!-- order section ends -->
+
+<!-- footer section starts  -->
+
+<section class="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>locations</h3>
+            <a href="#">india</a>
+            <a href="#">japan</a>
+            <a href="#">russia</a>
+            <a href="#">USA</a>
+            <a href="#">france</a>
+        </div>
+
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="#">home</a>
+            <a href="#">dishes</a>
+            <a href="#">about</a>
+            <a href="#">menu</a>
+            <a href="#">reivew</a>
+            <a href="#">order</a>
+        </div>
+
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="#">+123-456-7890</a>
+            <a href="#">+111-222-3333</a>
+            <a href="#">shaikhanas@gmail.com</a>
+            <a href="#">anasbhai@gmail.com</a>
+            <a href="#">mumbai, india - 400104</a>
+        </div>
+
+        <div class="box">
+            <h3>follow us</h3>
+            <a href="#">facebook</a>
+            <a href="#">twitter</a>
+            <a href="#">instagram</a>
+            <a href="#">linkedin</a>
+        </div>
+
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <div class="box">
+            <h3>Hello {{request.user}}</h3>
+            <a href="{% url 'logout' %}">logout</a>
+            <a href="{% url 'add_food' %}">Add Food</a>
+            
+        </div>
+        {% endif %}
+
+
+
+    </div>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'add_review' %}" class="btn">add review</a>
+    {% endif %}
+    <div class="credit"> copyright @ 2021 by <span>mr. web designer</span> </div>
+
+
+{% endblock %}
